@@ -15,11 +15,7 @@ export default {
 
   data() {
     return {
-      assignments: [
-        { name: "Finish project", complete: false, id: 1, tag: "math" },
-        { name: "Read chapter 4", complete: false, id: 2, tag: "science" },
-        { name: "Turn in homework", complete: false, id: 3, tag: "math" },
-      ],
+      assignments: [],
     };
   },
 
@@ -32,6 +28,16 @@ export default {
         completed: this.assignments.filter((assignment) => assignment.complete),
       };
     },
+  },
+
+  created() {
+    // A Promise is literaly a promise to give you response but it doesn't have anything for you right now
+
+    fetch("http://localhost:3001/assignments") // return a Promise to give me this data
+      .then((response) => response.json()) // I promise to give you a json but not right away;
+      .then((assignments) => {
+        this.assignments = assignments;
+      }); // When you have my data, then console.log the data
   },
 
   methods: {
