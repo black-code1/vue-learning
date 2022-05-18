@@ -3,19 +3,25 @@ import AssignmentCreate from "./AssignmentCreate.js";
 export default {
   components: { AssignmentList, AssignmentCreate },
   template: `
-  <section class="space-y-6">
-    <assignment-list :assignments="filters.inProgress" title="In Progress"></assignment-list>
-    <assignment-list :assignments="filters.completed" title="Completed"></assignment-list>
+  <section class="flex gap-8">
+    <assignment-list :assignments="filters.inProgress" title="In Progress">
+    <assignment-create @add="add"></assignment-create>
+    </assignment-list>
+
+    <div v-show ="showCompleted">
+    <assignment-list :assignments="filters.completed" title="Completed" can-toggle @toggle="showCompleted = !showCompleted"></assignment-list>
+    </div>
 <!--this parent component listen to the @add event and it then calls his method-->
 <!--The parent communicate to the child through props-->
 <!--The child communicate back to the parent by emitting an event-->
-    <assignment-create @add="add"></assignment-create>
+    
   </section>
   `,
 
   data() {
     return {
       assignments: [],
+      showCompleted: true,
     };
   },
 
